@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Photo of the Month</title>
+  <title>Photo of the Month Winner</title>
   <style>
     body {
       margin: 0;
@@ -20,191 +20,63 @@
     h1 {
       color: #ff8c00;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       font-size: clamp(1.5rem, 5vw, 2.5rem);
     }
 
     .winner-block {
       width: 100%;
-      max-width: 700px;
+      max-width: 500px;
       background: #222;
       padding: 20px;
       border-radius: 16px;
       text-align: center;
-      font-size: 1.2rem;
       margin-bottom: 20px;
-      color: #ffd700;
-      font-weight: bold;
     }
 
-    .info {
-      max-width: 700px;
-      text-align: center;
-      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-      margin-bottom: 20px;
-      line-height: 1.5;
-      color: #ccc;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+    .winner-block img {
       width: 100%;
-      max-width: 1200px;
-      margin-bottom: 40px;
-    }
-
-    .slot {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .slot label {
-      font-weight: bold;
-      color: #ff8c00;
-      font-size: 1rem;
-      text-align: center;
-    }
-
-    .photo-container {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: #222;
-      border-radius: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .photo-container img {
-      width: 100%;
-      height: 100%;
+      max-height: 400px;
       object-fit: cover;
       border-radius: 16px;
+      margin-bottom: 15px;
     }
 
-    input[type="file"] {
-      width: 100%;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background: #111;
-      color: #fff;
-      font-size: 0.9rem;
+    .winner-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffd700;
     }
 
-    button {
-      padding: 10px;
-      width: 100%;
+    .form-button {
+      padding: 12px 20px;
       border: none;
       border-radius: 8px;
       background: #6a5acd;
       color: #fff;
+      font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
+      text-decoration: none;
       transition: 0.2s;
     }
 
-    button:hover {
+    .form-button:hover {
       background: #7c6df2;
-    }
-
-    .select-winner-btn {
-      margin-bottom: 30px;
-      width: 200px;
-    }
-
-    @media(max-width: 600px){
-      .grid {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
 <body>
-  <h1>Photo of the Month</h1>
+  <h1>Photo of the Month Winner</h1>
 
-  <!-- Winner Display -->
-  <div class="winner-block" id="winnerBlock">
-    Winner will appear here after selection!
+  <div class="winner-block">
+    <img id="winnerPhoto" src="sushant.jpeg" alt="Winner Photo">
+    <div class="winner-name" id="winnerName">Winner ???? </div>
   </div>
 
-  <!-- <button class="select-winner-btn" onclick="selectWinner()">Select Winner</button> -->
+  <a class="form-button" href="https://forms.gle/zfbyBBSkHGaeFodTA" target="_blank">
+   Submit photos here
+  </a>
 
-  <div class="info">
-    Upload your photo in the frame below to participate. If your photo is selected as <strong>Photo of the Month</strong>, your Aura will increase by <strong>5000+</strong> points!
-  </div>
-
-  <div class="grid" id="photoGrid"></div>
-
-  <script>
-    const names = [
-      "Aakshit Ghimire",
-      "Anmol Sapkota",
-      "Ishan Shrestha",
-      "Kashiv Shrestha",
-      "Manjil Jung",
-      "Nishan Lama",
-      "Prajwol Thapa",
-      "Safal Dulal",
-      "Sushant Rai",
-      "Swayam Darlami"
-    ];
-
-    const grid = document.getElementById('photoGrid');
-
-    // Generate upload slots
-    names.forEach((name, index) => {
-      const slot = document.createElement('div');
-      slot.classList.add('slot');
-      slot.innerHTML = `
-        <label>${name}</label>
-        <div class="photo-container" id="photoDisplay${index}">
-          <span>No photo selected</span>
-        </div>
-        <input type="file" id="photoInput${index}" accept="image/*">
-        <button onclick="uploadPhoto(${index})">Add Photo</button>
-      `;
-      grid.appendChild(slot);
-    });
-
-    // Upload photo function
-    function uploadPhoto(index) {
-      const input = document.getElementById(`photoInput${index}`);
-      const display = document.getElementById(`photoDisplay${index}`);
-      if(input.files && input.files[0]){
-        const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = function(e){
-          display.innerHTML = `<img src="${e.target.result}" alt="Photo of ${names[index]}">`;
-        }
-        reader.readAsDataURL(file);
-      } else {
-        alert('Please select a photo first.');
-      }
-    }
-
-    // Select random winner
-    function selectWinner() {
-      const uploadedIndexes = [];
-      for(let i=0;i<names.length;i++){
-        const display = document.getElementById(`photoDisplay${i}`);
-        if(display.querySelector('img')){
-          uploadedIndexes.push(i);
-        }
-      }
-      if(uploadedIndexes.length === 0){
-        alert("No photos uploaded! Please upload at least one photo.");
-        return;
-      }
-      const winnerIndex = uploadedIndexes[Math.floor(Math.random() * uploadedIndexes.length)];
-      const winnerName = names[winnerIndex];
-      document.getElementById('winnerBlock').textContent = `🎉 Winner: ${winnerName} (+5000 Aura) 🎉`;
-    }
-  </script>
 </body>
 </html>
