@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura Counter — Home</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0b0b0b;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    /* Grid container */
+    .grid {
+      display: grid;
+      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      justify-content: center; /* centers grid items */
+    }
+
+    .card {
+      background: #141414;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 100, 0, 0.6), 0 0 40px rgba(255, 140, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 100, 0, 0.8), 0 0 60px rgba(255, 140, 0, 0.6);
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .profile-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #333;
+      margin-right: 10px;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-weight: bold;
+      color: #ff8c00;
+    }
+
+    .label {
+      font-size: 0.85rem;
+      color: #bbb;
+    }
+
+    .value {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .stability-description {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    @media (max-width: 800px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Aura Dashboard</h1>
+
+  <div class="grid">
+    <!-- Profile Cards -->
+    <div class="card">
+      <div class="row">
+        <img src="akshit.png" alt="Aakshit Ghimire" class="profile-img">
+        <div class="profile-name">Aakshit Ghimire</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="anmol.png" alt="Anmol Sapkota" class="profile-img">
+        <div class="profile-name">Anmol Sapkota</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="ishan.png" alt="Ishan Shrestha" class="profile-img">
+        <div class="profile-name">Ishan Shrestha</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="kashiv.png" alt="Kashiv Shrestha" class="profile-img">
+        <div class="profile-name">Kashiv Shrestha</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="manjil.png" alt="Manjil Jung" class="profile-img">
+        <div class="profile-name">Manjil Jung</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="nishan.jpg" alt="Nishan Lama" class="profile-img">
+        <div class="profile-name">Nishan Lama</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="prajwal.png" alt="Prajwol Thapa" class="profile-img">
+        <div class="profile-name">Prajwol Thapa</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="safal.jpg" alt="Safal Dulal" class="profile-img">
+        <div class="profile-name">Safal Dulal</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="sushant.jpeg" alt="Sushant Rai" class="profile-img">
+        <div class="profile-name">Sushant Rai</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <img src="swayam.png" alt="Swayam Darlami" class="profile-img">
+        <div class="profile-name">Swayam Darlami</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Count:</div>
+        <div class="value">10,00000</div>
+      </div>
+      <div class="row">
+        <div class="label">Aura Decrease Rate:</div>
+        <div class="value">0/sec</div>
+      </div>
+      <div class="row">
+        <div class="label">Stability:</div>
+        <div class="value">High</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stability-description">
+    <p>Stability indicates how consistent the aura remains over time. "High" means the aura is very stable and loses minimal energy.</p>
+  </div>
+</body>
+</html>

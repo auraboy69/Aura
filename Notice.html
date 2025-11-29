@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notice Board</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0b0b0b;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: #ff8c00;
+    }
+
+    .notice-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .notice {
+      background: #141414;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+      transition: transform 0.3s;
+    }
+
+    .notice:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(255, 140, 0, 0.7);
+    }
+
+    .notice-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ff8c00;
+      margin-bottom: 10px;
+    }
+
+    .notice-date {
+      font-size: 0.85rem;
+      color: #bbb;
+      margin-bottom: 15px;
+    }
+
+    .notice-text {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #eee;
+    }
+
+    @media (max-width: 600px) {
+      .notice {
+        padding: 15px;
+      }
+      .notice-title {
+        font-size: 1rem;
+      }
+      .notice-text {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Notice Board</h1>
+
+  <div class="notice-container">
+    <div class="notice">
+      <div class="notice-title">Networking Assignment</div>
+      <div class="notice-date">December 5, 2025</div>
+      <div class="notice-text">
+       Networking ko hw check hunxa yeti bela sala
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin the Wheel</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff8c00;
+    }
+
+    input, button {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    input {
+      width: 250px;
+      margin-right: 10px;
+    }
+
+    button {
+      cursor: pointer;
+      background: #6a5acd;
+      color: white;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #7c6df2;
+    }
+
+    #wheel-container {
+      margin-top: 30px;
+      width: 90vw;
+      max-width: 400px;
+      position: relative;
+    }
+
+    canvas {
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+      background: #222;
+    }
+
+    #winner {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ff8c00;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Spin the Wheel</h1>
+
+  <div>
+    <input type="text" id="namesInput" placeholder="Enter names separated by commas">
+    <button id="addNamesBtn">Add Names</button>
+  </div>
+
+  <div id="wheel-container">
+    <canvas id="wheel"></canvas>
+  </div>
+
+  <button id="spinBtn" style="margin-top:20px;">Spin</button>
+
+  <div id="winner"></div>
+
+  <script>
+    const canvas = document.getElementById('wheel');
+    const ctx = canvas.getContext('2d');
+    const spinBtn = document.getElementById('spinBtn');
+    const addNamesBtn = document.getElementById('addNamesBtn');
+    const namesInput = document.getElementById('namesInput');
+    const winnerDiv = document.getElementById('winner');
+
+    let names = [];
+    let spinning = false;
+    let angle = 0;
+
+    // Make canvas responsive
+    function resizeCanvas() {
+      const size = Math.min(window.innerWidth * 0.9, 400);
+      canvas.width = size;
+      canvas.height = size;
+      drawWheel();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function drawWheel() {
+      const radius = canvas.width / 2;
+      const centerX = radius;
+      const centerY = radius;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if(names.length === 0) return;
+
+      const sliceAngle = 2 * Math.PI / names.length;
+
+      for(let i=0; i<names.length; i++){
+        // Color slice
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, i*sliceAngle + angle, (i+1)*sliceAngle + angle);
+        ctx.fillStyle = i % 2 === 0 ? '#ff8c00' : '#6a5acd';
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.stroke();
+
+        // Add text
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(i*sliceAngle + sliceAngle/2 + angle);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#fff";
+        ctx.font = `${Math.floor(radius / 10)}px Arial`;
+        ctx.fillText(names[i], radius - 10, 5);
+        ctx.restore();
+      }
+    }
+
+    function spinWheel() {
+      if(spinning || names.length === 0) return;
+      spinning = true;
+      winnerDiv.textContent = "";
+
+      const spins = Math.random() * 1500 + 1500; // spin duration in ms (faster)
+      const rotations = Math.random() * 20 + 10; // total rotations (increase for faster spin)
+      const finalAngle = rotations * 2 * Math.PI;
+
+      const start = performance.now();
+
+      function animate(time){
+        let elapsed = time - start;
+        let progress = Math.min(elapsed / spins, 1);
+        // Ease out rotation with faster start
+        angle = finalAngle * Math.pow(progress, 0.8); // makes the start faster
+        drawWheel();
+
+        if(progress < 1){
+          requestAnimationFrame(animate);
+        } else {
+          spinning = false;
+          const sliceAngle = 2 * Math.PI / names.length;
+          const selectedIndex = Math.floor(((2 * Math.PI - (angle % (2 * Math.PI))) / sliceAngle)) % names.length;
+          winnerDiv.textContent = "Winner: " + names[selectedIndex];
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    addNamesBtn.addEventListener('click', () => {
+      const input = namesInput.value.trim();
+      if(input){
+        names = input.split(',').map(n => n.trim()).filter(n => n);
+        drawWheel();
+        winnerDiv.textContent = "";
+      }
+    });
+
+    spinBtn.addEventListener('click', spinWheel);
+
+    drawWheel();
+  </script>
+</body>
+</html>
