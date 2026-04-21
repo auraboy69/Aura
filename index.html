@@ -2,151 +2,342 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aura Counter — Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Under Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0c0f;
+      --surface: #13151a;
+      --border: #2a2d35;
+      --accent: #c8f54a;
+      --accent2: #f5a623;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+    }
+
     body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: #0d0d0d;
-      color: #e5e5e5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
       min-height: 100vh;
-      padding: 20px;
-    }
-
-    .card {
-      background: #1a1a1a;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      width: 100%;
-      max-width: 380px;
       display: flex;
-      flex-direction: column;
-      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    h2 {
-      margin: 0;
+    /* animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    /* glowing orb */
+    body::after {
+      content: '';
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,245,74,0.12) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      z-index: 0;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: translate(-50%, -60%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -60%) scale(1.1); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(640px, 90vw);
       text-align: center;
-      font-weight: 600;
-      font-size: clamp(1.4rem, 3vw, 2rem);
     }
 
-    label {
-      font-size: 0.9rem;
-      color: #b3b3b3;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(200,245,74,0.08);
+      border: 1px solid rgba(200,245,74,0.25);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
     }
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background: #111;
-      color: #fff;
-      font-size: 1rem;
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: blink 1.4s ease-in-out infinite;
     }
 
-    input:focus {
-      outline: none;
-      border-color: #6a5acd;
-      box-shadow: 0 0 6px #6a5acd;
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
     }
 
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background: #6a5acd;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      color: #fff;
-      transition: 0.2s;
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.6s 0.1s ease both;
     }
 
-    .btn:hover {
-      background: #7c6df2;
+    h1 span {
+      color: var(--accent);
     }
 
-    .footer {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #808080;
+    p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 420px;
+      margin: 0 auto 2.5rem;
+      animation: fadeUp 0.6s 0.2s ease both;
     }
 
-    .footer a {
-      color: #6a5acd;
-      text-decoration: none;
+    /* Progress */
+    .progress-wrap {
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
     }
 
-    /* New buttons container */
-    .extra-buttons {
+    .progress-label {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    .progress-label span:last-child {
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    .progress-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent), #a3e635);
+      animation: fillBar 1.8s 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
+      box-shadow: 0 0 12px rgba(200,245,74,0.5);
+    }
+
+    @keyframes fillBar {
+      to { width: 65%; }
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
       gap: 10px;
-      margin-top: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.6s 0.4s ease both;
     }
 
-    .extra-buttons button {
-      background: #ff8c00;
-      border: none;
-      padding: 10px;
+    .tag {
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Notify form */
+    .notify {
+      display: flex;
+      gap: 10px;
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+
+    .notify input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #fff;
-      transition: 0.2s;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      padding: 12px 18px;
+      outline: none;
+      transition: border-color 0.2s;
     }
 
-    .extra-buttons button:hover {
-      background: #ffa500;
+    .notify input::placeholder { color: var(--muted); }
+
+    .notify input:focus {
+      border-color: rgba(200,245,74,0.5);
+    }
+
+    .notify button {
+      background: var(--accent);
+      color: #0b0c0f;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 24px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .notify button:hover { opacity: 0.88; }
+    .notify button:active { transform: scale(0.97); }
+
+    .social-links {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 2rem;
+      animation: fadeUp 0.6s 0.65s ease both;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 22px;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .social-btn.whatsapp:hover {
+      border-color: #25d366;
+      background: rgba(37,211,102,0.08);
+      color: #25d366;
+    }
+
+    .social-btn.discord:hover {
+      border-color: #5865f2;
+      background: rgba(88,101,242,0.08);
+      color: #7983f5;
+    }
+
+    .social-btn svg {
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 12px;
+      color: #3a3f4b;
+      animation: fadeUp 0.6s 0.75s ease both;
+      letter-spacing: 0.04em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h2>Login</h2>
+  <div class="container">
 
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter your email" />
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Under Development
     </div>
 
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter your password" />
+    <h1>comming <span>soon</span></h1>
+
+    <p>We're working hard to build an exceptional experience. Our team is crafting something worth the wait.</p>
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Build progress</span>
+        <span>65%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
     </div>
 
-    <button class="btn">Sign In</button>
-
-    <div class="extra-buttons">
-      <button onclick="location.href='Notice.html'">Go to Notices</button>
-      <button onclick="location.href='photo.html'">Photos of the month</button>
-      <button onclick="location.href='spin.html'">Spin Page</button>
+    <div class="tags">
+      <div class="tag">New design</div>
+      <div class="tag">Core features</div>
+      <div class="tag">Mobile app</div>
+      <div class="tag">Performance</div>
     </div>
 
-    <div class="footer">
-      Don't have an account? <a href="sign.html">Sign up</a>
+    <div class="social-links">
+      <!-- Replace href with your WhatsApp link e.g. https://wa.me/9771234567890 -->
+      <a href="[https://chat.whatsapp.com/HptOWKDW3E8ApJNKHo3poZ](https://chat.whatsapp.com/HptOWKDW3E8ApJNKHo3poZ)" target="_blank" class="social-btn whatsapp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Join on WhatsApp
+      </a>
+      <!-- Replace href with your Discord invite e.g. https://discord.gg/yourcode -->
+      <a href="https://discord.gg/StpNAKvy" target="_blank" class="social-btn discord">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+        </svg>
+        Join on Discord
+      </a>
     </div>
+
+    <footer>©2026 EDUverse &nbsp;·&nbsp; All rights reserved</footer>
+
   </div>
-
-  <script>
-    const btn = document.querySelector('.btn');
-    btn.addEventListener('click', () => {
-      const password = document.getElementById('password').value;
-      if (password === 'aura123') {
-        window.location.href = 'home.html';
-      } else {
-        alert('Password incorrect. Please try again.');
-      }
-    });
-  </script>
 </body>
 </html>
